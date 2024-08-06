@@ -31,11 +31,19 @@ const Wallets = async (req, res) => {
                 message: 'Deposit not found'
             });
         }
-         
-        const balances = 0.00
 
-        const totalBalance = deposit.total + balances;
-        if (totalBalance <= 0) {
+          // Fetch the existing wallet balance for the user
+          const wallet = await Wallet.findOne({ where: { user_id } });
+
+          // Calculate new total balance
+          const newDepositAmount = parseFloat(deposit.total); // Replace with actual deposit amount if available
+          const existingBalance = wallet ? parseFloat(wallet.balances ): 0.00;
+          const newTotalBalance = existingBalance + newDepositAmount;
+         
+        
+
+       
+        if (newTotalBalance <= 0) {
             return res.status(400).json({
                 status: false,
                 message: "Total balances not valid"
@@ -56,7 +64,7 @@ const Wallets = async (req, res) => {
         const result = await Wallet.create({
             deposit_id: deposit.id,
             user_id:deposit.user_id,
-            balances: totalBalance,
+            balances: newTotalBalance,
             currency:deposit.currency,
             status: status
         });
@@ -107,6 +115,7 @@ const getWallet = async (req, res) => {
         });
     }
 };
+
 
 module.exports = {
     getWallet,

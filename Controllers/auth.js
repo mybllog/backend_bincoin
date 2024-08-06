@@ -747,7 +747,6 @@ const deleteUserById = async(req, res) =>{
 
 
 module.exports = {
-    User, 
     Register, 
     Login, 
     verifyRefreshToken, 

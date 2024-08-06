@@ -13,16 +13,11 @@ const User = db.user;
 
 const Deposits = async (req, res) => {
     try {
-        const { email, amount , currency } = req.body;
-        console.log(email, "uiiiiii");
+        const { amount , currency } = req.body;
+        const userId = req.params.id
+        
 
-        // Input validation
-        if (!email || !validator.isEmail(email)) {
-            return res.status(400).send({
-                status: false,
-                message: 'Invalid email'
-            });
-        }
+        
 
         if (!amount || amount <= 0) {
             return res.status(400).send({
@@ -31,7 +26,7 @@ const Deposits = async (req, res) => {
             });
         }
 
-        const user = await User.findOne({ where: { email: email } });
+        const user = await User.findOne({ where: { id: userId } });
 
         if (!user) {
             return res.status(400).send({
