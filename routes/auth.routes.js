@@ -9,7 +9,6 @@ const config = require("../config")
 const verifyToken = require("../Controllers/auth/verifyToken")
 const {sendEmail} = require('../Helpers/email')
 const {
-    User,
      Register,
       Login,  
       verifyRefreshToken,  
@@ -30,9 +29,9 @@ const {
 // ... (Other imports and configurations)
 
 // API endpoint to create a new user
-router.post('/users',User, async (req, res) => {
+/*router.post('/users',User, async (req, res) => {
     
-});
+});*/
 
 //endpoint to comfirm user
 
@@ -84,37 +83,37 @@ router.post('/confirmuser', async (req, res) => {
 router.post('/register',Register) 
 
 //endpoint to deposit
-router.post('/deposit',Deposits) 
+router.post('/deposit/:id',Deposits) 
 
 // endpoint to get all deposit
-router.get('/getdeposit',getDeposits,verifyToken) 
+router.get('/getdeposit',getDeposits,[verifyToken]) 
 
 // endpoint to get deposit by id
-router.get('/getdeposit/:id',getDepositsByUserId,verifyToken) 
+router.get('/getdeposit/:id',getDepositsByUserId,[verifyToken]) 
 
 //endpoint to wallet
 router.post('/wallet/:user_id',Wallets) 
 
 //endpoint to  getting wallet
-router.get('/wallet',getWallet,verifyToken) 
+router.get('/wallet',getWallet,[verifyToken]) 
 
 //endpoint to withdraw
 router.post('/withdraw/:id',postWithdraw) 
 
 //endpoint to get withdraws
-router.get('/getwithdraw',getWithdrawal,verifyToken) 
+router.get('/getwithdraw',getWithdrawal,[verifyToken]) 
 
 //endpoint to withdraw
 router.post('/transaction/:id',postTransaction) 
 
 
 //endpoint to get transaction
-router.get('/gettransaction', getTransaction,verifyToken)
+router.get('/gettransaction', getTransaction,[verifyToken])
 
 
 
 // endpoint to get all wallet
-router.get('/getwallet',getWallet,verifyToken) 
+router.get('/getwallet',getWallet,[verifyToken]) 
 
 // endpoint to login in registered user
 router.post('/login',Login)
@@ -123,7 +122,7 @@ router.post('/login',Login)
 router.get('/verifyRefreshToken',verifyRefreshToken)
 
 //endpoint to update the password of registered user
-router.put('/:id/password/update', updatePassword ,verifyToken) 
+router.put('/:id/password/update', updatePassword ,[verifyToken]) 
 
 
 
@@ -145,11 +144,11 @@ router.get('/confirm', verifyRegistration )
 
 
 // API endpoint to retrieve all users
-router.get('/users',verifyToken, getUser) 
+router.get('/users',[verifyToken], getUser) 
 
 
 // API endpoint to get a specific user by id
-router.get('/users/:id',verifyToken ,getUserById)
+router.get('/users/:id',[verifyToken],getUserById)
 
 
 // Update a particular user's information
